@@ -26,9 +26,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <None Include="LICENSE" />
-  </ItemGroup>
-  <ItemGroup>
     <ClInclude Include="invalid_logger.h">
       <Filter>Header Files</Filter>
     </ClInclude>

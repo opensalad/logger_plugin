@@ -11,9 +11,6 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <None Include="LICENSE" />
-  </ItemGroup>
-  <ItemGroup>
     <ClInclude Include="abstract_logger.h" />
     <ClInclude Include="c_str_logger.h" />
     <ClInclude Include="file_logger.h" />

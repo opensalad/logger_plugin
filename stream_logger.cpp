@@ -13,7 +13,7 @@ namespace ad
 	{
 		QString msg(message);
 		format(level, msg);
-		std::cout << msg.toStdString() << std::flush;
+		std::cout << msg.toStdString() << std::endl;
 	}
 
 	char const* StreamLogger::id() const { return __id.toStdString().c_str(); }
