@@ -26,7 +26,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\LICENSE" />
     <None Include="LICENSE" />
   </ItemGroup>
   <ItemGroup>
