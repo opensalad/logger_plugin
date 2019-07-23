@@ -9,36 +9,32 @@ namespace ad
 		: __pattern("%t %d [%thd] [ %L ] %lid: %m")
 	{}
 
-	void StreamLogger::log(LogLevel level, char const *message) const
+	void StreamLogger::log(LogLevel level, string_t const &message)
 	{
 		QString msg(message);
 		format(level, msg);
 		std::cout << msg.toStdString() << std::endl;
 	}
 
-	char const* StreamLogger::id() const { return __id.toStdString().c_str(); }
-	char const* StreamLogger::pattern() const { return __pattern.toStdString().c_str(); }
+	string_t StreamLogger::id() const { return __id.toStdString().c_str(); }
+	string_t StreamLogger::pattern() const { return __pattern.toStdString().c_str(); }
 
-	char const* StreamLogger::param(char const *param_key) const
+	string_t StreamLogger::param(string_t const &param_key) const
 	{
 		if (__params.contains(param_key))
 			return __params[param_key].toStdString().c_str();
 		return nullptr;
 	}
 
-	char const** StreamLogger::paramList() const
+	map_t StreamLogger::paramList() const
 	{
-		char const **result = new char const*[__params.size() + 1];
-		int i = 0;
-		for (QString const &param : __params.keys()) { result[i++] = param.toStdString().c_str(); }
-		result[i] = nullptr;
-		return result;
+		return __params;
 	}
 
-	char const* StreamLogger::uuid() const { return "stream_logger"; }
-	void StreamLogger::setId(char const *id) { __id = QString(id); }
-	void StreamLogger::setPattern(char const *pattern) { __pattern = QString(pattern); }
-	void StreamLogger::setPatternParam(char const *param_key, char const *param_val) { __params[param_key] = QString(param_val); }
+	string_t StreamLogger::uuid() const { return "stream_logger"; }
+	void StreamLogger::setId(string_t const &id) { __id = QString(id); }
+	void StreamLogger::setPattern(string_t const &pattern) { __pattern = QString(pattern); }
+	void StreamLogger::setPatternParam(string_t const &param_key, string_t const &param_val) { __params[param_key] = QString(param_val); }
 
 	void StreamLogger::format(LogLevel level, QString &msg) const
 	{

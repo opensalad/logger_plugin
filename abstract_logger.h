@@ -1,9 +1,13 @@
 #pragma once
 #include <logger.h>
+#include <QMap>
+#include <QString>
 
 namespace ad
 {
-	class AbstractLogger : public Logger
+	using string_t = QString;	
+	using map_t = QMap<string_t, string_t>;
+	class AbstractLogger : public Logger<string_t, map_t>
 	{
 	public:
 		enum LoggerFlag

@@ -3,17 +3,19 @@
 
 namespace ad
 {
-	class InvalidLogger : public Logger
+	using string_t = char const * const &;
+	using map_t = char const ** const &;
+	class InvalidLogger : public Logger<string_t, map_t>
 	{
 	public:
-		void log(LogLevel, char const *) const override {}
-		void setId(char const *) override {}
-		void setPattern(char const *) override {}
-		void setPatternParam(char const *, char const *) override {}
-		char const* id() const override { return ""; }
-		char const* pattern() const override { return ""; }
-		char const* param(char const *) const override { return ""; }
-		char const** paramList() const override { return nullptr; }
-		char const* uuid() const override { return "invalid_logger"; }
+		void log(LogLevel, string_t) override {}
+		void setId(string_t) override {}
+		void setPattern(string_t) override {}
+		void setPatternParam(string_t, string_t) override {}
+		string_t id() const override { return ""; }
+		string_t pattern() const override { return ""; }
+		string_t param(string_t) const override { return ""; }
+		map_t paramList() const override { return nullptr; }
+		string_t uuid() const override { return "invalid_logger"; }
 	};
 }

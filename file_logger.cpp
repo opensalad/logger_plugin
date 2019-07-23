@@ -18,7 +18,7 @@ namespace ad
 	 * \param path the `.log` file path
 	 */
 	FileLogger::FileLogger(QString const &path)
-		: __uuid("logger" + QUuid::createUuid().toString(QUuid::Id128))
+		: __uuid("logger")
 		, __pattern("%t %d [%thd] [ %L ] %lid: %m")
 	{
 		if (path.endsWith(".log"))
@@ -44,20 +44,20 @@ namespace ad
 	 * \brief Get the logger's ID
 	 * \return the logger's ID
 	 */
-	char const* FileLogger::id() const { return __logger_id.toStdString().c_str(); }
+	string_t FileLogger::id() const { return __logger_id.toStdString().c_str(); }
 
 	/**
 	 * \brief Get the formatting pattern.
 	 * \return the formatting pattern
 	 */
-	char const* FileLogger::pattern() const { return __pattern.toStdString().c_str(); }
+	string_t FileLogger::pattern() const { return __pattern.toStdString().c_str(); }
 
 	/**
 	 * \brief Get the parameter for the specified key.
 	 * \param param_key the required parameter's key
 	 * \return the value for specified parameter key
 	 */
-	char const* FileLogger::param(char const *param_key) const
+	string_t FileLogger::param(string_t const &param_key) const
 	{
 		if (__param_tbl.contains(param_key))
 			return __param_tbl[param_key].toStdString().c_str();
@@ -68,13 +68,9 @@ namespace ad
 	 * \brief Get the list of available parameters.
 	 * \return null terminated C-style array containing the list ov valid parameter keys
 	 */
-	char const** FileLogger::paramList() const
+	map_t FileLogger::paramList() const
 	{
-		char const **result = new char const* [__param_tbl.size() + 1];
-		int i = 0;
-		for (QString const &param : __param_tbl.keys()) { result[i++] = param.toStdString().c_str(); }
-		result[i] = nullptr;
-		return result;
+		return __param_tbl;
 	}
 
 	/**
@@ -89,7 +85,7 @@ namespace ad
 	 * \param message the message to be printed
 	 * \return formatted output
 	 */
-	QString FileLogger::formatMessage(LogLevel level, char const *message) const
+	QString FileLogger::formatMessage(LogLevel level, string_t msg) const
 	{
 		QString result = __pattern;
 		result.replace("%d", (QDate::currentDate().toString("dd.MM.yyyy")));
@@ -114,10 +110,6 @@ namespace ad
 		default: lvl = "";
 		}
 		result.replace("%L", QString("%1").arg(lvl, 5));
-		QString msg(message);
-		msg.replace('\n', "");
-		msg.replace('\t', "");
-		msg.replace(' ', "");
 		result.replace("%m", msg);
 		return result;
 	}
@@ -129,7 +121,7 @@ namespace ad
 	 * \param level the logging level
 	 * \param message the message to be printed
 	 */
-	void FileLogger::log(LogLevel level, char const *message) const
+	void FileLogger::log(LogLevel level, string_t const &message)
 	{
 		while (!__log_file.device()->isOpen())
 			__log_file.device()->open(QIODevice::Append | QIODevice::WriteOnly);
@@ -146,20 +138,14 @@ namespace ad
 	 * \brief Set the logger's ID.
 	 * \param id the logger's ID
 	 */
-	void FileLogger::setId(char const *id) { __logger_id = QString(id); }
-
-	/**
-	 * \brief Set the logger's formatting pattern.
-	 * \param pattern the formatting pattern
-	 */
-	void FileLogger::setPattern(char const *pattern) { setPattern(QString(pattern)); }
+	void FileLogger::setId(string_t const &id) { __logger_id = QString(id); }
 
 	/**
 	 * \brief Set parameter.
 	 * \param param_key the parameter's key
 	 * \param param_val the parameter's value
 	 */
-	void FileLogger::setPatternParam(char const *param_key, char const *param_val) { __param_tbl[param_key] = QString(param_val); }
+	void FileLogger::setPatternParam(string_t const &param_key, string_t const &param_val) { __param_tbl[param_key] = QString(param_val); }
 
 	// Plugin interface implementation
 
@@ -167,5 +153,13 @@ namespace ad
 	 * \brief Get plugin specific uuid.
 	 * \return plugin specific uuid
 	 */
-	char const* FileLogger::uuid() const { return __uuid.toStdString().c_str(); }
+	string_t FileLogger::uuid() const { return __uuid; }
+}
+
+extern "C"
+{
+	ad::FileLogger* getInstance(ad::PluginManager<QString> *)
+	{
+		return new ad::FileLogger();
+	}
 }

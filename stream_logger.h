@@ -1,23 +1,21 @@
 #pragma once
-#include <logger.h>
-#include <QMap>
-class QString;
+#include "abstract_logger.h"
 
 namespace ad
 {
-	class StreamLogger : public Logger
+	class StreamLogger : public AbstractLogger
 	{
 	public:
 		StreamLogger();
-		void log(LogLevel level, char const *message) const override;
-		void setId(char const *id) override;
-		void setPattern(char const *pattern) override;
-		void setPatternParam(char const *param_key, char const *param_val) override;
-		char const* id() const override;
-		char const* pattern() const override;
-		char const* param(char const *param_key) const override;
-		char const** paramList() const override;
-		char const* uuid() const override;
+		void log(LogLevel level, string_t const &message) override;
+		void setId(string_t const &id) override;
+		void setPattern(string_t const &pattern) override;
+		void setPatternParam(string_t const &param_key, string_t const &param_val) override;
+		string_t id() const override;
+		string_t pattern() const override;
+		string_t param(string_t const &param_key) const override;
+		map_t paramList() const override;
+		string_t uuid() const override;
 	protected:
 		virtual void format(LogLevel level, QString &message) const;
 	private:

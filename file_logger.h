@@ -12,26 +12,31 @@ namespace ad
 		FileLogger();
 		FileLogger(QString const &path);
 		~FileLogger() override;
-		void setPattern(QString const &format);
 		void setLoggerUuid(QString const &uuid);
-		QString formatMessage(LogLevel level, char const *message) const;
+		QString formatMessage(LogLevel level, string_t message) const;
 
 		//
 		// Logger interface
 		//
-		void log(LogLevel level, char const *message) const override;
-		void setId(char const *id) override;
-		void setPattern(char const *pattern) override;
-		void setPatternParam(char const *param_key, char const *param_val) override;
-		char const* id() const override;
-		char const* pattern() const override;
-		char const* param(char const *param_key) const override;
-		char const** paramList() const override;
+		void enable() override {}
+		void disable() override {}
+		bool isEnabled() const override { return true; }
+
+		void log(LogLevel level, string_t const &message) override;
+		void setId(string_t const &id) override;
+		void setPattern(string_t const &pattern) override;
+		void setPatternParam(string_t const &param_key, string_t const &param_val) override;
+		string_t id() const override;
+		string_t pattern() const override;
+		string_t param(string_t const &param_key) const override;
+		map_t paramList() const override;
 
 		//
 		// Plugin interface
 		//
-		char const* uuid() const override;
+		string_t uuid() const override;
+		void setManager(PluginManager<string_t> *) override {}
+		void onPluginLoaded(Plugin<string_t> *) override {}
 	private:
 		QString __uuid;
 		QString __logger_id;
