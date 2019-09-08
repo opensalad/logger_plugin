@@ -33,7 +33,7 @@ int main()
 ## Config file properties
 
 | Parameter | Description | Values |
-|-|-|-|-|
+|-|-|-|
 | `"type"`      | The logger type | file_logger <br> stream_logger <br> [any other value]|
 | `"log_level"` | The logging level | trace <br> debug <br> info <br> warn <br> error <br> all |
 | `"logger_id"` | The identifier for the logger | any string |
