@@ -28,7 +28,7 @@ int main()
 }
 ```
 
-| Default configurations will be used if no configuration set.
+> Default configurations will be used if no configuration set.
 
 ## Config file properties
 
