@@ -2,7 +2,7 @@
 #include "logger_global.h"
 #include "qt_logger.h"
 #include <QUuid>
-#include <QTextStream>
+#include <QFile>
 
 namespace ad
 {
@@ -14,6 +14,7 @@ namespace ad
 		~FileLogger() override;
 		void setLoggerUuid(QString const &uuid);
 		QString formatMessage(LogLevel level, string_t message) const;
+		void setFilePath(QString const &path);
 
 		//
 		// Logger interface
@@ -36,12 +37,11 @@ namespace ad
 		//
 		string_t uuid() const override;
 		void setManager(PluginManager<string_t> *) override {}
-		void onPluginLoaded(Plugin<string_t> *) override {}
 	private:
 		QString __uuid;
 		QString __logger_id;
 		QMap<QString, QString> __param_tbl;
 		QString __pattern;
-		mutable QTextStream __log_file;
+		QFile __log_file;
 	};
 }

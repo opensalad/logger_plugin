@@ -5,9 +5,7 @@
 
 namespace ad
 {
-	using string_t = QString;	
-	using map_t = QMap<string_t, string_t>;
-	class AbstractLogger : public Logger<string_t, map_t>
+	class AbstractLogger : public Logger<QString, QMap<QString, QString>>
 	{
 	public:
 		enum LoggerFlag
