@@ -103,15 +103,15 @@ namespace ad
 		QString lvl;
 		switch (level)
 		{
-		case Trace: lvl = "TRACE";
+		case LogLevel::Trace: lvl = "TRACE";
 			break;
-		case Debug: lvl = "DEBUG";
+		case LogLevel::Debug: lvl = "DEBUG";
 			break;
-		case Info: lvl = "INFO";
+		case LogLevel::Info: lvl = "INFO";
 			break;
-		case Warn: lvl = "WARN";
+		case LogLevel::Warn: lvl = "WARN";
 			break;
-		case Error: lvl = "ERROR";
+		case LogLevel::Error: lvl = "ERROR";
 			break;
 		default: lvl = "";
 		}
@@ -131,7 +131,7 @@ namespace ad
 	{
 		while (!__log_file.isOpen())
 			__log_file.open(QIODevice::Append | QIODevice::WriteOnly);
-		if (level < logLevel())
+		if (level > logLevel())
 			return;
 		if (!__log_file.isOpen())
 			return;

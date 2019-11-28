@@ -3,19 +3,20 @@
 ######################################################################
 
 TEMPLATE = lib
-TARGET = ./logger
-INCLUDEPATH += ../interfaces
+TARGET = ${ROOT}/libs/logger
+INCLUDEPATH += ${ROOT}/interfaces include ${ROOT}/macros
 DEFINES += QT_DEPRECATED_WARNINGS
 QT += core
+CONFIG += debug
 
-HEADERS += abstract_logger.h \
-            file_logger.h \
-            invalid_logger.h \
-            logger_global.h \
-            qt_logger.h \
-            stream_logger.h \
-            logger_factory.h 
+HEADERS += src/abstract_logger.h \
+            src/file_logger.h \
+            src/invalid_logger.h \
+            src/logger_global.h \
+            src/qt_logger.h \
+            src/stream_logger.h \
+            include/logger_factory.h 
 
-SOURCES += file_logger.cpp \
-            stream_logger.cpp \
-            logger_factory.cpp
+SOURCES += src/file_logger.cpp \
+            src/stream_logger.cpp \
+            src/logger_factory.cpp

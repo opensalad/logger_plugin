@@ -17,7 +17,7 @@ namespace ad
 
 	public:
 		AbstractLogger()
-			: __level(Info)
+			: __level(LogLevel::All)
 			, __flags(CleanOnStart) {}
 
 		LogLevel logLevel() const { return __level; }
